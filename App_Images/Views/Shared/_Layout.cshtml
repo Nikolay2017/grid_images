@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title – приложение ASP.NET</title>
+  
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Первая задача", "Index1", "Home")</li>
+                    <li>@Html.ActionLink("Вторая задача", "Index2", "Home")</li>
+                    <li>@Html.ActionLink("Третья задача", "Index3", "Home")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+        @RenderBody()
+    
+
+   
+    <script src="../scripts/jquery-1.10.2.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

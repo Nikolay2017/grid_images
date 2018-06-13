@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "Третья задача";
+}
+<h2>@ViewBag.Title.</h2>
+<style>
+    .row-child {
+        float: left;
+    }
+
+    img {
+        margin-bottom: -4px;
+    }
+</style>
+
+<div class="row">
+    <img class="row-child" src="~/images/1.jpg">
+    <div class="col row-child">
+        <div class="row">
+            <img class="row-child" src="~/images/2.jpg">
+            <div class="col">
+                <div class="col_child row">
+                    <img class="row-child" src="~/images/3.jpg">
+                    <img class="row-child" src="~/images/4.jpg">
+                </div>
+                <img class="col_child" src="~/images/7.jpg">
+            </div>
+        </div>
+        <img src="~/images/5.jpg">
+    </div>
+    <img class="row-child" src="~/images/9.jpg">
+</div>
+@section scripts {
+    <script>
+        var width_All = 1000.0;
+        var height_All = 0.0;
+        var ROWS = document.getElementsByClassName("row");
+        var COLS = document.getElementsByClassName("col");
+        var j = 0;
+
+        size(ROWS);
+
+        function size(rows) {
+            var count_rows = rows.length;
+            var i = 0;
+            for (i = 0; i < count_rows; i++) {
+                size2(rows[i]);
+            }
+        }
+
+        function size2(row) {
+            var height = 0.0;
+            var sum_otn = 0.0;
+            var count_child_row = row.children.length;
+
+            for (i = 0; i < count_child_row; i++) {
+                sum_otn = sum_otn + row.children[i].clientWidth / row.children[i].clientHeight;
+            }
+            if (j == 0) height_All = width_All / sum_otn;
+            j++;
+            height = width_All / sum_otn;
+
+            var i = 0;
+            for (i = 0; i < count_child_row; i++) {
+                row.children[i].width = row.children[i].clientWidth * height / row.children[i].clientHeight;
+                row.children[i].height = height;
+                if (row.children[i].tagName == "IMG") {
+                    width_All = width_All - row.children[i].width;
+                }
+            }
+            for (i = 0; i < count_child_row; i++) {
+                if (row.children[i].tagName != "IMG") {
+                    row.children[i].width = width_All;
+                    var count = row.children[i].children.length;
+                    for (i = 0; i < count; i++) {
+                        if (row.children[i].children.length > 0) {
+                            if (row.children[i].children[i].tagName == "IMG") {
+                                row.children[i].children[i].height = row.children[i].children[i].height * width_All / row.children[i].children[i].width;
+                                row.children[i].children[i].width = width_All;
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
+
+
+    </script>
+}
+

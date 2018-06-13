@@ -1,0 +1,181 @@
+﻿@model IEnumerable<App_Images.Models.ImageEx>
+@{
+    ViewBag.Title = "Первая задача";
+}
+<h2>@ViewBag.Title.</h2>
+<style>
+    ul {
+        list-style: none;
+    }
+
+    li {
+        display: inline;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+<ul style="list-style:none;margin: 0;padding: 0;">
+    @foreach (var item in Model)
+    {
+        <li><img style="margin-right:-4px;" src="~/images/@item.NameImg" height="@item.heightImg" width="@item.widthImg" /></li>
+    }
+</ul>
+<div><img style="margin-right:-4px;" src="~/images/1.jpg" /></div>
+
+@{
+    ViewBag.Title = "Вторая задача";
+}
+<h2>@ViewBag.Title.</h2>
+
+@section scripts {
+    <script>
+        var main_size = 0;
+        class row {
+            constructor() {
+                this.DivRow = document.createElement("div");
+
+                if (main_size==0) {
+                    this.MainDiv = document.createElement("div");
+                    this.MainDiv.className = "div_main";
+                    this.MainDiv.width = 1000;
+                    main_size = this.MainDiv.width;
+                    this.MainDiv.appendChild(this.DivRow);
+                    document.body.appendChild(this.MainDiv);
+                }
+
+            }
+            add(child_row) {
+                if (child_row instanceof column) {
+                    this.DivRow.appendChild(child_row.DivColumn);
+                }
+                else {
+                    this.DivRow.appendChild(child_row);
+                }
+                return this;
+            }
+            size() {
+                var height = 0.0;
+                var sum_otn = 0.0;
+                let count_child = this.DivRow.children.length;
+                var i = 0;
+                for (i = 0; i < count_child; i++) {
+                    if (this.DivRow.children[i].clientHeight != 0) {
+                        sum_otn = sum_otn + this.DivRow.children[i].clientWidth / this.DivRow.children[i].clientHeight;
+                    }
+                }
+                height = this.DivRow.parentElement.width / sum_otn;
+                var j = 0;
+                for (j = 0; j < count_child; j++) {
+                    this.DivRow.children[j].width = this.DivRow.children[j].clientWidth * height / this.DivRow.children[j].clientHeight;
+                    this.DivRow.children[j].height = height;
+                }
+            }
+        }
+
+        class column {
+            constructor() {
+                this.DivColumn = document.createElement("div");
+
+                if (main_size==0) {
+                    this.MainDiv = document.createElement("div");
+                    this.MainDiv.className = "div_main";
+                    this.MainDiv.height = 1000;
+                    main_size = this.MainDiv.height;
+                    this.MainDiv.appendChild(this.DivColumn);
+                    document.body.appendChild(this.MainDiv);
+                }
+                //this.DivColumn.setAttribute("style", "float:left;");
+                //this.DivColumn.innerHTML = "<img src='../images/2.jpg'/>"
+            }
+            add(child_column) {
+                if (child_column instanceof row) {
+                    this.DivColumn.appendChild(child_column.DivRow);
+                }
+                else {
+                    this.DivColumn.appendChild(child_column);
+                }
+                return this;
+            }
+            size() {
+                var width = 0.0;
+                var sum_otn = 0.0;
+                let count_child = this.DivColumn.children.length;
+                var i = 0;
+                for (i = 0; i < count_child; i++) {
+                    if (this.DivColumn.children[i].clientWidth != 0) {
+                        sum_otn = sum_otn + this.DivColumn.children[i].clientHeight / this.DivColumn.children[i].clientWidth;
+                    }
+                }
+                width = this.DivColumn.parentElement.width / sum_otn;
+                var j = 0;
+                for (j = 0; j < count_child; j++) {
+                    this.DivColumn.children[j].width = width;
+                    this.DivColumn.children[j].height = this.DivColumn.children[j].clientHeight * width / this.DivColumn.children[j].clientWidth;
+                }
+            }
+        }
+
+
+        var r1 = new row();
+        var c1 = new column();
+
+        r1.add(img("1.jpg")).add(c1).add(img("6.jpg"));
+
+
+        c1.add(img("7.jpg"));
+        r1.size();
+        c1.size();
+
+
+        //var r2 = new row(),
+        //var c2 = new column(),
+        //var r3 = new row();
+
+        //r1.add(img("12.jpg")).add(c1).add(img("13.jpg"));
+        //c1.add(r2).add(img("7.jpg"));
+        //r2.add(img("4.jpg")).add(c2); c2.add(r3).add(img("5.jpg"));
+        //r3.add(img("3.jpg")).add(img("6.jpg"));
+
+        function img(name_img) {
+            var img = document.createElement("img");
+            img.src = '../images/' + name_img;
+            img.setAttribute("style", "float:left;");
+            return img;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
